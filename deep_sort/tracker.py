@@ -4,6 +4,7 @@ import numpy as np
 from . import kalman_filter
 from . import linear_assignment
 from . import iou_matching
+from. import nn_matching
 from .track import Track
 
 
@@ -47,6 +48,12 @@ class Tracker:
         self.tracks = []
         self._next_id = 1
 
+
+    def initialization(self,detections):
+        matches, unmatched_tracks, unmatched_detections = \
+            self._match(detections)
+        for detection_idx in unmatched_detections:
+            self._initiate_track(detections[detection_idx])
     def predict(self):
         """Propagate track state distributions one time step forward.
 
