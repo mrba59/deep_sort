@@ -1,6 +1,6 @@
 # vim: expandtab:ts=4:sw=4
 import numpy as np
-
+from sklearn.metrics.pairwise import cosine_similarity
 
 def _pdist(a, b):
     """Compute pair-wise squared distance between points in `a` and `b`.
@@ -92,7 +92,8 @@ def _nn_cosine_distance(x, y):
         smallest cosine distance to a sample in `x`.
 
     """
-    distances = _cosine_distance(x, y)
+    #distances = _cosine_distance(x, y)
+    distances = 1-cosine_similarity(x, y)
     return distances.min(axis=0)
 
 
